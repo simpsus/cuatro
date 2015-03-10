@@ -5,7 +5,7 @@ class Player:
 
     def __init__(self, name):
         self.name = name
-        self.stones = 15
+        self.pieces = 15
         # the color is assigned by the Game, when the player is added.
         self.color = None
 
@@ -34,6 +34,7 @@ class Human(Player):
     def place(self, dice, board):
         print board
         print dice
-        place = raw_input("where to place your stone ('row col')? ")
-        place = [int(k) for k in place if k.isdigit()]
-        return place[0], place [1]
+        place = ""
+        while len(place) != 2:
+            place = raw_input("where to place your piece? ").upper()
+        return place
