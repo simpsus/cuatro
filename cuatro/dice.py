@@ -16,6 +16,8 @@ class Dice:
         self.throws = 0
         self.faces = [0, 0, 0, 0, 0]
         self.counts = {}
+        self.max_face = 0
+        self.max_count = 0
 
     def roll(self, keep=None):
         # making sure only existing faces are kept
@@ -40,6 +42,10 @@ class Dice:
         self.counts = defaultdict(int)
         for num in self.faces:
             self.counts[num] += 1
+        for face, count in self.counts.items():
+            if count > max_count:
+                max_count = count
+                max_face = face
 
     def verify(self, keep):
         """ verifies that keep only contains existing faces """
