@@ -28,11 +28,49 @@ class DiceAnalyzer():
 			# two matches possible with 3 dices
 			result += ((1./6) ** 2) * ((5./6) ** (free-2)) * out_of(free, 2) * self.yathzee(initial + 2, left - 1)
 		if free > 1:  	
+			#if free < 5:
+				# there already is a chosen face
 			# we can have one match
 			result += 1./6 * ((5./6) ** (free-1)) * free * self.yathzee(initial + 1, left - 1)
 		# any given sunday, we can have no luck
-		result += 5./6 ** free * self.yathzee(initial, left - 1)
+		result += ((5./6) ** free) * self.yathzee(initial, left - 1)
 		return result
+
+	def single_roll(self, target):
+		if target == "yathzee":
+			return 6 * (1./6) ** 5
+		if target == "four of a kind":
+			return 6 * 5 * (1./6) ** 4 * 5./6
+		if target == "three of a kind":
+			return 6 * out_of(5,3) * (1./6) ** 3 * (5./6) ** 2
+		if target == "pair":
+			# a true pair, so no full house
+			return 6 * out_of(5,2) * (1./6) ** 2 * (5./6) ** 2 * 4./6
+		if target == "no match":
+			return fac(6) * 1. / (6 ** 5)
+
+	def y(self, roles=0):
+		single_roll = self.single_roll("yathzee")
+		if roles == 1:
+			return single_roll
+		# now with two rolls
+		# four of a kind with a single 
+		four_single = self.single_roll("four of a kind") * (1./6)
+		# three of a kind and then two matching
+		three_two = self.single_roll("three of a kind") * (1./6) ** 2
+		# a pair and then three that match
+		pair_three = self.single_roll("pair") * (1./6) ** 3
+		# no match and then matching four
+		no_four = self.single_roll("no match") * (1./6) ** 4
+		two_roll = four_single
+		two_roll += three_two
+		two_roll += no_four
+		two_roll += pair_three
+		if roles == 2:
+			return two_roll
+		return single_roll + two_roll
+
+	
 
 	def full_house(self, dice):
 		pass
@@ -82,5 +120,7 @@ def simulate_yathzee():
 
 if __name__ == "__main__":
 	da = DiceAnalyzer()
-	print da.yathzee()
-	simulate_yathzee()
+	print da.single_roll("yathzee")
+	print da.y()
+	#print da.yathzee(0,0)
+	#simulate_yathzee()
