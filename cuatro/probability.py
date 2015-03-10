@@ -35,16 +35,17 @@ class DiceAnalyzer():
 		return result
 
 	def full_house(self, dice):
+		pass
 		
 
-def is_yathzee(faces):
-	face = faces[0]
-	for f in faces:
+def is_yathzee(dice):
+	face = dice.faces[0]
+	for f in dice.faces:
 		if f != face:
 			return False
 	return True
 
-import cuatro
+import dice
 
 def simulate_yathzee():
 	attempts = 0
@@ -57,16 +58,16 @@ def simulate_yathzee():
 		for attempt in range(stepsize):
 			attempts += 1
 			yathzee = False
-			dice = cuatro.Dice()
+			d = dice.Dice()
 			face = 0
 			keep= []
 			for throw in range(5):
-				dice.roll(keep)
+				d.roll(keep)
 				if face == 0:
-					face = dice.max_face
+					face = d.max_face
 				else:
-					keep = [face for i in range(dice.max_count)]
-				if is_yathzee(dice.faces):
+					keep = [face for i in range(d.max_count)]
+				if is_yathzee(d):
 					yathzee = True
 					break
 			if yathzee:
@@ -82,4 +83,4 @@ def simulate_yathzee():
 if __name__ == "__main__":
 	da = DiceAnalyzer()
 	print da.yathzee()
-	#simulate_yathzee()
+	simulate_yathzee()

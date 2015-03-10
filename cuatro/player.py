@@ -1,4 +1,3 @@
-from probability import DiceAnalyzer
 
 class Player:
     """ Base class of a cuatro player """
@@ -26,8 +25,8 @@ class Human(Player):
     def play(self, dice, board):
         print board
         print dice.throws, "\t", dice
-        da = DiceAnalyzer(dice)
-        da.probability_yahtzee()
+        #da = DiceAnalyzer(dice)
+        #da.probability_yahtzee()
         keep = raw_input("which numbers do you want to keep? ")
         return [int(k) for k in keep if k.isdigit()]
 

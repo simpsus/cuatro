@@ -43,9 +43,9 @@ class Dice:
         for num in self.faces:
             self.counts[num] += 1
         for face, count in self.counts.items():
-            if count > max_count:
-                max_count = count
-                max_face = face
+            if count > self.max_count:
+                self.max_count = count
+                self.max_face = face
 
     def verify(self, keep):
         """ verifies that keep only contains existing faces """
